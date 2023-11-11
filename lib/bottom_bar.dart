@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/chart.dart';
+import 'package:myapp/controller/list_adding_widget.dart';
 import 'package:myapp/expense.dart';
 import 'package:myapp/homepage.dart';
 import 'package:myapp/income.dart';
@@ -22,7 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void initState() {
     super.initState();
     widgetOptions = [
-       HomePage(),
+      HomePage(),
       const inCome(),
       const exPense(),
       const Chart(),
@@ -95,53 +96,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              hoverColor: Colors.yellow,
-              focusColor: Colors.blue,
-              backgroundColor: Colors.amber,
-              shape: CircleBorder(),
-          onPressed: () {
-             showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
-          context: context,
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15),
-              child: Column(
-                children: [
-                  SizedBox(height: 20,),
-                  TextFormField(
-                    decoration: InputDecoration(border: 
-                    OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: const Color.fromARGB(255, 4, 40, 70))
-                    )
-                    ),
-                  ),
-                  
-                  SizedBox(height: 20,),
-                  TextFormField(
-                    decoration: InputDecoration(border: 
-                    OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: const Color.fromARGB(255, 4, 40, 70))
-                    )
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-
-          },
-          child: Icon(Icons.add),
-        ),
+            floatingActionButton: ListAdding(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           ),
         );
