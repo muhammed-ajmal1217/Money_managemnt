@@ -8,9 +8,7 @@ class ListAdding extends StatelessWidget {
   }) : super(key: key);
 
   TextEditingController amountController = TextEditingController();
-
   TextEditingController descriptionController = TextEditingController();
-
   TextEditingController categoryController = TextEditingController();
 
   @override
@@ -62,6 +60,7 @@ class ListAdding extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
+                            controller: categoryController,
                             decoration: InputDecoration(
                               hintText: 'Income / Expense',
                               border: OutlineInputBorder(
@@ -82,6 +81,7 @@ class ListAdding extends StatelessWidget {
                             }).toList(),
                             onChanged: (newValue) {
                               value.listAdding(newValue);
+                              categoryController.text = newValue!;
                             },
                           ),
                         )
@@ -96,19 +96,16 @@ class ListAdding extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10), 
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 30), 
+                            vertical: 15, horizontal: 30),
                         backgroundColor:
-                            const Color.fromARGB(255, 5, 50, 87), 
+                            const Color.fromARGB(255, 5, 50, 87),
                       ),
                       child: Text(
-                        'Close',
-                        style: TextStyle(
-                            fontSize: 18), 
+                        'Add',
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                   ],

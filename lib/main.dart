@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/bottom_bar.dart';
-import 'package:myapp/provider/bottom_bar_provider.dart';
 import 'package:myapp/provider/list_adding_provider.dart';
 import 'package:provider/provider.dart';
 
