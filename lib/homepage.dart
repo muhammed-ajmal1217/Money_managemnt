@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/income.dart';
+import 'package:myapp/provider/list_adding_provider.dart';
 import 'package:myapp/widgets/drawe.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key});
-
-  List listItems = [];
+  String? amount;
+  String? description;
+  String? category;
+  HomePage({Key? key,required this.amount,required this.description,required,this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -30,27 +34,42 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: CustomDrawer(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                Text('Amount : 3259/-',style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.black,fontSize: 20)),)
-              ],
+      body: Consumer<listAddingProvider>(
+        builder: (context,pro,child)=>
+         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Text('Income : ${pro.totalIncome}/-',style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.black,fontSize: 14)),),
+                    Text('Expense : ${pro.totalExpense}/-',style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.black,fontSize: 14)),),
+                  ],
+                ),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(''),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final data= pro.items[index];
+                  final textColor=data.category=='Income'? Colors.green:Colors.red;
+                  return ListTile(
+                    title: Text(data.description!),
+                    subtitle: Text(data.category!),
+                    trailing: data.amount != null ? Text('${data.amount}/-', style: TextStyle(fontSize: 16,color: textColor)) : null,
+                    
+                    
+                  );
                   
-                );
-              },
+                },
+                itemCount: pro.items.length,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

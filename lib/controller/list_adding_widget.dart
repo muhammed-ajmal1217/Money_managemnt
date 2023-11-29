@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/model/model.dart';
 import 'package:myapp/provider/list_adding_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -75,7 +77,7 @@ class ListAdding extends StatelessWidget {
                         Consumer<listAddingProvider>(
                           builder: (context, value, child) => DropdownButton(
                             value: value.dropdownValue,
-                            items: value.items.map((String items) {
+                            items: value.category.map((String items) {
                               return DropdownMenuItem(
                                   value: items, child: Text(items));
                             }).toList(),
@@ -92,16 +94,33 @@ class ListAdding extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        final amount = amountController.text.trim();
+                        final description = descriptionController.text.trim();
+                        final category = categoryController.text.trim();
+                        if (amount.isNotEmpty ||
+                            description.isNotEmpty ||
+                            category.isNotEmpty) {
+                          final datas = Model(
+                              amount: int.parse(amount),
+                              category: category,
+                              description: description);
+                          Provider.of<listAddingProvider>(context,
+                                  listen: false)
+                              .addItem(datas);
+                              Provider.of<listAddingProvider>(context, listen: false).incomeExpense();
+                              Navigator.pop(context);
+                              amountController.clear();
+                              descriptionController.clear();
+                              categoryController.clear();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 30),
-                        backgroundColor:
-                            const Color.fromARGB(255, 5, 50, 87),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                        backgroundColor: const Color.fromARGB(255, 5, 50, 87),
                       ),
                       child: Text(
                         'Add',

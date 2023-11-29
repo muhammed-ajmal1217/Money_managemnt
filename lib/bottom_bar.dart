@@ -23,7 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void initState() {
     super.initState();
     widgetOptions = [
-      HomePage(),
+      HomePage(amount: '',description: '',category: ''),
       const inCome(),
       const exPense(),
       const Chart(),

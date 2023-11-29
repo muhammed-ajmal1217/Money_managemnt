@@ -1,13 +1,13 @@
+
+
 class Model{
-  int? inCome;
-  int? exPense;
-  DateTime date;
-  String description;
+int? amount;
+String? description;
+String? category;
 
   Model({
-    required this.inCome,
-    required this.exPense,
-    required this.date,
-    required this.description,
+    this.amount,
+    this.description,
+    this.category,
   });
 }
