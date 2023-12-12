@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/chart.dart';
-import 'package:myapp/controller/list_adding_widget.dart';
+import 'package:myapp/widgets/list_adding_widget.dart';
 import 'package:myapp/expense.dart';
 import 'package:myapp/homepage.dart';
 import 'package:myapp/income.dart';
@@ -23,15 +23,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void initState() {
     super.initState();
     widgetOptions = [
-      HomePage(amount: '',description: '',category: ''),
-      const inCome(),
-      const exPense(),
-      const Chart(),
+      HomePage(),
+      inCome(),
+      exPense(),
+      Chart(),
     ];
     currentScreen = widgetOptions[selectIndex];
   }
 
   final PageStorageBucket bucket = PageStorageBucket();
+  String selectedCategory = 'Income';
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +49,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
               bucket: bucket,
               child: currentScreen,
             ),
-            
             bottomNavigationBar: Theme(
-               data: Theme.of(context).copyWith(
-              canvasColor: Color.fromARGB(255, 2, 1, 48), 
-            ),
+              data: Theme.of(context).copyWith(
+                canvasColor: Color.fromARGB(255, 0, 9, 55),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 16.0), // Adjust the padding as needed
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: BottomNavigationBar(
@@ -96,11 +96,26 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 ),
               ),
             ),
-            floatingActionButton: ListAdding(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ListAdding();
+                  },
+                );
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.orange,
+                shape: CircleBorder(),
+              ),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           ),
         );
-      }
+      },
     );
   }
 }
